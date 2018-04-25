@@ -1,0 +1,11 @@
+GIT_REMOTE_URL = $(shell git config --get remote.origin.url)
+DOCKER_SERVER ?= 
+DOCKER_USERNAME ?= 
+DOCKER_PASSWORD ?=
+IMAGE_DESCRIPTION = 'Docker image for IBM Cloud Private Galera using MariaDB Helm chart'
+IMAGE_NAME = galera-mariadb
+IMAGE_REPO ?= ibmcom
+IMAGE_VERSION ?= latest
+RELEASE_VERSION ?= latest
+
+ARCH = $(shell uname -m)

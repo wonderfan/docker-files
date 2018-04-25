@@ -1,0 +1,20 @@
+FROM ibmcom/mariadb-ppc64le:10.1.16
+
+COPY root /
+COPY ppc64le/peer-finder /usr/local/bin/peer-finder
+
+RUN mkdir -p /var/lib/mysql && \
+    chown -R mysql:0 /var/lib/mysql && \
+    chmod -R g+w /var/lib/mysql && \
+    mkdir -p /var/run/mysql && \
+    chown -R mysql:0 /var/run/mysql && \
+    chmod -R g+w /var/run/mysql && \
+    chmod 755 /usr/local/bin/* && \
+    echo '!include /etc/config/my_extra.cnf' >> /etc/mysql/my.cnf
+
+VOLUME /var/lib/mysql
+
+EXPOSE 3306 4444 4567 4567/udp 4568
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["mysqld"]

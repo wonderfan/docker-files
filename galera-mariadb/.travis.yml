@@ -1,0 +1,29 @@
+sudo: required
+
+language: generic
+
+os:
+  - linux
+  - linux-ppc64le
+
+services:
+  - docker
+
+matrix:
+  fast_finish: true
+
+script:
+  - make image
+
+# only build and run deploy on releases - branch will be the tag name
+# no point in running on master after a PR merge
+branches:
+  only:
+    - master
+    - /^[0-9]+\..*$/
+
+deploy:
+  provider: script
+  script: bash scripts/travis-deploy.sh
+  on:
+    tags: true
